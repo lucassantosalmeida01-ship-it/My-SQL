@@ -1,0 +1,71 @@
+create database if not exists empregamaiss
+default character set utf8mb4
+-- anotações
+collate utf8mb4_0900_ai_ci;
+use empregamaiss;
+
+create table if not exists 	usuario(
+id_usuario int primary key auto_increment,
+senha int,
+email varchar(30),
+data_cadastro datetime,
+administrado varchar(30),
+telefone varchar(30)
+);
+desc usuario;
+create table if not exists 	cliente(
+ id_cliente int primary key auto_increment,
+ statuss boolean,
+ informacoescurriculo varchar(500),
+ avaliacao int,
+ fotos int,
+ id_usuario int,
+ foreign key (id_usuario) references usuario(id)
+);
+desc cliente;
+create table if not exists 	empresa(
+ id_empresa int primary key auto_increment,
+ avaliacao int,
+ statuss boolean,
+ informacaoempresa varchar (500),
+ id_usuario int,
+ foreign key (id_usuario) references usuario(id)
+);
+desc empresa;
+create table if not exists 	avaliacao(
+ id_avaliacao int primary key auto_increment,
+ dataavaliacao datetime,
+ comentario varchar(50),
+ nota int,
+ id_cliente int,
+ id_empresa int,
+ foreign key (id_cliente) references cliente(id),
+ foreign key (id_empresa) references empresa(id)
+);
+desc avaliacao;
+create table if not exists 	inscricao(
+ id_candidatura int primary key auto_increment,
+ id_cliente int,
+ foreign key (id_cliente) references cliente(id)
+);
+desc inscricao;
+create table if not exists 	vagadetrabalho(
+ id_vaga int primary key auto_increment,
+ profissao varchar(30),
+ cadastro varchar(50),
+ statuss boolean,
+ datainicial datetime,
+ dataencerramento datetime,
+ requisitos varchar(50),
+ id_empresa int,
+ id_candidatura int,
+ foreign key (id_empresa) references empresa(id),
+ foreign key (id_candidatura) references inscricao(id)
+);
+desc vagadetrabalho;
+create table if not exists 	consegueemprego(
+ id_consegueemprego int primary key auto_increment,
+ id_vaga int,
+ foreign key (id_vaga) references vagadetrabalho(id)
+);
+desc consegueemprego;
