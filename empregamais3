@@ -1,0 +1,159 @@
+create database if not exists empregamaiss
+default character set utf8mb4
+-- anotações
+collate utf8mb4_0900_ai_ci;
+use empregamaiss;
+
+create table if not exists 	usuario(
+id_usuario int primary key auto_increment,
+senha int,
+email varchar(30),
+data_cadastro datetime,
+administrado varchar(30),
+telefone varchar(30)
+);
+
+insert into usuario
+(id_usuario, senha, email, data_cadastro, administrado, telefone)
+values
+(123, 'lucasalmeida@gmail.com', 01-12-2026, 'adm1', '(44)99999-9999'),
+(124, 'lucasmiguis@gmail.com', 02-12-2026, 'adm2', '(44)90999-9999'),
+(134, 'lukkinhasmiguis@gmail.com', 03-12-2026, 'adm3', '(44)90919-9999'),
+(198, 'aninhacarol@gmail.com', 03-11-2026, 'adm4', '(44)90919-8999'),
+(189, 'perox@gmail.com', 13-12-2026, 'adm5', '(44)90919-9899'),
+(108, 'lukkis@gmail.com', 14-12-2026, 'adm6', '(44)90919-9989'),
+(1890, 'lukkinhamiguis@gmail.com', 15-12-2026, 'adm7', '(44)93919-3999');
+ select*from usuario;
+
+
+create table if not exists 	cliente(
+ id_cliente int primary key auto_increment,
+ statuss boolean,
+ informacoescurriculo varchar(500),
+ avaliacao int,
+ fotos int,
+ id_usuario int,
+ foreign key (id_usuario) references usuario(id)
+);
+insert into cliente
+(id_cliente, statuss, infomarcoescurriculo, avaliacao, fotos, id_usuario)
+values
+(1532, true, 'top1', 60, 16, 123),
+(151232, false, 'top2',59, 155, 124),
+(1632, true, 'top3', 58, 45, 134),
+(1562, false, 'top4', 57, 4, 198),
+(15632, true, 'top5', 56, 2, 189),
+(15532, false, 'top6', 55, 123, 108),
+(15732, true, 'top7', 54, 12, 1890);
+
+ select*from cliente;
+
+
+create table if not exists 	empresa(
+ id_empresa int primary key auto_increment,
+ avaliacao int,
+ statuss boolean,
+ informacaoempresa varchar (500),
+ id_usuario int,
+ foreign key (id_usuario) references usuario(id)
+);
+
+insert into empresa
+(id_empresa, avaliacao, statuss, informacaoempresa, id_usuario)
+values
+(1532123, 60, true, "info1", 123),
+(15324323, 70,false, "info2", 124),
+(1532343, 90, true, "info3", 134),
+(1532154323, 100,false ,"info4" , 198),
+(15321233, 14, true, "info5", 189),
+(1532122343,53, false, "info6", 108),
+(15321010123,69, true, "info7", 1890);
+
+ select*from empresa;
+
+create table if not exists 	avaliacao(
+ id_avaliacao int primary key auto_increment,
+ dataavaliacao datetime,
+ comentario varchar(50),
+ nota int,
+ id_cliente int,
+ id_empresa int,
+ foreign key (id_cliente) references cliente(id),
+ foreign key (id_empresa) references empresa(id)
+);
+
+insert into avaliacao
+(id_avaliacao, dataavaliacao, comentario, nota, id_cliente, id_empresa)
+values
+(15, 15-12-2025, 'coment1', 34, 1532, 1532123),
+(16, 16-12-2025, 'coment2', 53, 151232, 15324323),
+(17, 17-12-2025, 'coment3', 67, 1632, 1532343),
+(18, 18-12-2025, 'coment4', 69, 1562,1532154323 ),  
+(19, 19-12-2025, 'coment5', 68, 15632, 15321233),
+(20, 20-12-2025, 'coment6', 70, 15532, 1532122343),
+(13, 21-12-2025, 'coment7', 90, 15732, 15321010123);
+
+
+ select*from avaliacao;
+
+
+create table if not exists 	inscricao(
+ id_candidatura int primary key auto_increment,
+ id_cliente int,
+ foreign key (id_cliente) references cliente(id)
+);
+
+insert into inscricao
+(id_candidatura, id_cliente)
+values
+(1523045, 1532),
+(1523945, 151232),
+(152545, 1632),
+(152445, 1562),
+(15235,15632 ),
+(152435, 15532),
+(152345, 15732);
+
+ select*from inscricao;
+
+create table if not exists 	vagadetrabalho(
+ id_vaga int primary key auto_increment,
+ profissao varchar(30),
+ cadastro varchar(50),
+ statuss boolean,
+ datainicial datetime,
+ dataencerramento datetime,
+ requisitos varchar(50),
+ id_empresa int,
+ id_candidatura int,
+ foreign key (id_empresa) references empresa(id),
+ foreign key (id_candidatura) references inscricao(id)
+);
+
+insert into vagadetrabalho
+(id_vaga, profissao, cadastro, statuss, datainicial, dataencerramento, requisitos, id_empresa, id_candidatura)
+values
+(1, ),
+(2, ),
+(3, ),
+(4, ),
+(5, ),
+(6, ),
+(7, ),
+
+ select*from vagadetrabalho;
+
+create table if not exists 	consegueemprego(
+ id_consegueemprego int primary key auto_increment,
+ id_vaga int,
+ foreign key (id_vaga) references vagadetrabalho(id)
+);
+
+
+insert into consegueemprego
+(id_)
+values
+(1523045, ),
+
+
+ select*from consegueemprego;
